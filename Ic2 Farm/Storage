@@ -1,0 +1,61 @@
+local Robot_Func = require("Robot_Func")
+local config = require("Configs")
+local rb = require("robot")
+local component = require("component")
+local inv = component.inventory_controller
+local sides = require("sides")
+local rs = component.redstone
+function UseBinder(x)
+    rb.select(3)
+    inv.equip()
+    local num = 0
+    repeat
+        num = num + 1
+        rb.placeDown()
+    until num == x
+end
+function StorageSize()
+    local length = config.StoragePos1[1] - config.StoragePos2[1] -1
+    local wide = config.StoragePos1[3] - config.StoragePos2[3] -1
+    return(wide,length)
+end
+function StorageSlot(Slot)
+    local length = {}
+    local wide = {}
+    local num = 1
+    local xtotal = 0
+    StorageSize()
+    while Slot > length do
+        xtotal = Slot - length
+        num = num + 1
+    end
+    return(xtotal,num)
+end
+function MovetoStorage(Slot)
+    local xtotal =0
+    local num = 0
+    StorageSlot(Slot)
+    local x = xtotal
+    local z = num
+    local xaxis = x - config.StoragePos1[1]
+    local zaxis = z - config.StoragePos1[3]
+    Moveto(xaxis,zaxis)
+end
+function MoveCroptoDislocation()
+    local Data = {}
+    GetPosition()
+    MoveCroptoDislocation()
+    UseBinder(1)
+    Moveto(Data[1],Data[3])
+    UseBinder(1)
+    MoveCroptoDislocation()
+    rs.setOutput(sides.down,15)
+end
+function MoveCroptoStorage(Slot)
+    MovetoDislocation()
+    UseBinder(1)
+    MoveCroptoStorage(Slot)
+    UseBinder(1)
+    MovetoDislocation()
+    rs.setOutput(sides.down,15)
+end

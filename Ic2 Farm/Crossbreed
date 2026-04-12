@@ -1,0 +1,64 @@
+local config = require("Configs")
+local rb = require("robot")
+local Robot_Func = require("Robot_Func")
+local Storage = require("Storage")
+local config = require("Configs")
+local wide = 0
+local length = 0
+FarmSize()
+function Crossbreed()
+    local Data = {}
+    slot = 1
+    Analyze()
+    for i,v in pairs(config.Backlist) do
+        for x,y in pairs(Data) do
+            if y == v then
+                UseSpade(1)
+            else MoveCroptoDislocation()
+                MoveCroptoStorage(slot)
+            end
+        end
+    end
+    DestroyWeed()
+    UseCropstick(1)
+    slot = slot + 1
+end
+function PlotCrossbreed()
+    rb.turnLeft()
+    rb.forward()
+    Crossbreed()
+    rb.turnRight()
+    rb.forward()
+    rb.turnRight()
+    rb.forward()
+    rb.turnLeft()
+    Crossbreed()
+end
+repeat
+    num1 = 0
+    repeat
+        Moveto(config.FarmPos1[1],config.FarmPos1[3])
+        local num = 0
+        repeat
+            num = num + 1
+            PlotCrossbreed()
+            Forward(2)
+        until(config.Plotlength-1 == num)
+        PlotCrossbreed()
+        rb.turnLeft()
+        Forward(4)
+        rb.turnLeft()
+        local num = 0
+        repeat
+            num = num + 1
+            PlotCrossbreed()
+            Forward(2)
+        until(config.Plotlength-1 == num)
+        rb.turnRight()
+        Forward(2)
+        rb.turnRight()
+        num1 = num1 + 1
+    until(config.Plotwide == num1)
+    Moveto(config.Chargerlocation[1],config.Chargerlocation[3])
+    os.sleep(5)
+until(slot == length*wide)

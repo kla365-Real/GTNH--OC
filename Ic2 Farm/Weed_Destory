@@ -1,0 +1,32 @@
+local farm_function = require("farm_function")
+local Robot_Func = require("Robot_Func")
+local rb = require("robot")
+local config = require("Configs")
+function ForwardScanWeed(x)
+    local num = 0
+    repeat
+        rb.forward()
+        DestroyWeed()
+        num = num + 1
+    until num == x
+end
+while true do
+    local length = 0
+    local wide = 0
+    local num = 0
+    FarmSize()
+    Moveto(config.FarmPos1[1],config.FarmPos1[3])
+    repeat
+        ForwardScanWeed(length)
+        rb.turnLeft()
+        Forward(1)
+        rb.turnLeft()
+        ForwardScanWeed(length)
+        rb.turnRight()
+        Forward(1)
+        rb.turnRight()
+        num = num + 1
+    until(num == wide)
+    Moveto(config.Chargerlocation[1],config.Chargerlocation[3])
+    os.sleep(5)
+end

@@ -1,0 +1,51 @@
+local component = require("component")
+local rb = require("robot")
+local config = require("Configs")
+local Robot_Func = require("Robot_Func")
+local geo = component.geolyzer
+local inv = component.inventory_controller
+function MovetoDislocation()
+    Moveto(config.Dislocation[1],config.Dislocation[3])
+end
+function UseSpade(x)
+    rb.select(1)
+    inv.equip()
+    local num = 0
+    repeat
+        num = num + 1
+        rb.placeDown()
+    until num == x
+end
+function UseCropstick(x)
+    rb.select(2)
+    inv.equip()
+    local num = 0
+    repeat
+        num = num + 1
+        rb.placeDown()
+    until num == x
+end
+function Analyze()
+    local Data = {}
+    local num = 0
+    for x,y in pairs(geo.analyze()) do
+        num = num + 1
+        Data[num] = y
+    end
+    return(Data)
+end
+function DestroyWeed()
+    local Data = {}
+    Analyze()
+    for x,y in pairs(Data) do
+        if y == "Weed" then
+            UseSpade(1)
+        else
+        end
+    end
+end
+function FarmSize()
+    local length = config.FarmPos1[1] - config.FarmPos2[1] -1
+    local wide = config.FarmPos1[3] - config.FarmPos2[3] -1
+    return(length,wide)
+end
