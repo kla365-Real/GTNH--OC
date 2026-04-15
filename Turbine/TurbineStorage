@@ -1,0 +1,99 @@
+local component = require("component")
+local gt = component.gt_machine
+local patterns = {"§r","§a","§e","§c","§"}
+local Tank = component.proxy(component.get("e9f41d11-4c40-4da4-b5a1-4f6215f383c0"))
+local Battery = component.proxy(component.get("d7517953-19de-403b-bdcf-1ae530aba5c6"))
+local file = io.open("Address.txt")
+local T = file:read("*line")
+local Address = {}
+local n = 0
+local gpu = component.gpu
+local sides = require("sides")
+local shell = require("shell")
+os.sleep(2)
+gpu.setResolution(48,13)
+repeat
+    n = n+1
+    Address[n] = file:read("*line")
+until n == 6
+file:close("Address.txt") 
+repeat
+    local DataTank = {}
+    local DataBattery = {}
+    local Data = {}
+    local Data1 = {}
+    local Sensor = {}
+    for x,y in pairs(Tank.getSensorInformation()) do
+        DataTank[x] = y
+        for i,v in pairs(patterns) do
+            DataTank[x] = string.gsub(DataTank[x],v,"")
+        end
+    end
+    local num = 1
+    for x,y in pairs(Address) do
+        Sensor[x] = component.proxy(component.get(y)).getSensorInformation()
+        for a,b in pairs(Sensor[x]) do
+            Data[num] = b
+            num = num+1
+        end
+    end
+    local num1 = 4
+    local num2 = 1
+    repeat
+        Data1[num2] = Data[num1]
+        num1 = num1+8
+        num2 = num2+1
+    until num1 == 52
+    local num3 = 1
+    repeat
+        for c,d in pairs(patterns) do
+            Data1[num3] = string.gsub(Data1[num3],d,"")
+        end
+        Data1[num3] = string.gsub(Data1[num3],"Stored Energy: ","")
+        Data1[num3] = string.gsub(Data1[num3],"EU / 4,194,816 EU","")
+        Data1[num3] = string.gsub(Data1[num3],",","")
+        Data1[num3] = string.gsub(Data1[num3]," ","")
+        num3 = num3 + 1
+    until num3 == 7
+    local energy = 0
+    for x,y in pairs(Data1) do
+        energy = energy + y
+    end
+    ---------------------------------------------------------------------
+    DataTank[4] = string.gsub(DataTank[4],"128,000,000 L","")
+    local DataTankNUM = string.gsub(DataTank[4],"L","")
+    DataTankNUM = string.gsub(DataTankNUM,",","")
+    local TA = DataTankNUM
+    os.sleep(1)
+    for x,y in pairs(Tank.getSensorInformation()) do
+        DataTank[x] = y
+        for i,v in pairs(patterns) do
+            DataTank[x] = string.gsub(DataTank[x],v,"")
+        end
+    end
+    DataTank[4] = string.gsub(DataTank[4],"128,000,000 L","")
+    local DataTankNUM1 = string.gsub(DataTank[4],"L","")
+    DataTankNUM1 = string.gsub(DataTankNUM1,",","")
+    local TB = DataTankNUM1
+    local avg = (TB - TA)/1
+    ---------------------------------------------------------------------
+    for x,y in pairs(Battery.getSensorInformation()) do
+        DataBattery[x] = y
+        for i,v in pairs(patterns) do
+            DataBattery[x] = string.gsub(DataBattery[x],v,"")
+        end
+    end
+    print("------------------------------------------------")
+    print("Energy Storage")
+    for x,y in pairs(DataBattery) do
+        print(y)
+    end
+    print("Energy Stored:",energy,"EU")
+    print("------------------------------------------------")
+    print("Nitrobenzene")
+    print("Fluid Stored",DataTank[4],"/ 128,000,000 L")
+    print("Flow Rate",avg,"L/s")
+    print("------------------------------------------------")
+until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+shell.execute("TurbineStatusActive")
+gpu.setResolution(100,50)

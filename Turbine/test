@@ -1,0 +1,8 @@
+local file = io.open("Address.txt")
+local T = file:read("*line")
+local Address = {}
+n = 0
+repeat
+    num = n+1
+    Address[n] = file:read("*line")
+until n == 6

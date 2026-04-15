@@ -1,0 +1,482 @@
+while true do
+    local component = require("component")
+    local gpu = component.gpu
+    local sides = require("sides")
+    local file = io.open("Address.txt")
+    local T = file:read("*line")
+    local Address = {}
+    local n = 0
+    repeat
+        n = n+1
+        Address[n] = file:read("*line")
+    until n == 6
+    file:close("Address.txt")
+    gpu.setResolution(23,7)
+    os.sleep(1)
+    repeat
+        local count = 0
+        local Data = {}
+        for x,y in pairs(Address) do
+            count = count + 1
+            Sensor = component.proxy(component.get(y)).getSensorInformation()
+            if string.find(Sensor[1],"running") then
+                Data[count] = "Online"
+            else
+                Data[count] = "offline"
+            end
+        end
+        for a,b in pairs(Data) do
+            print("Turbine",a,b)
+        end
+    until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+    --gpu.setResolution(100,50)
+    
+    local component = require("component")
+    local gpu = component.gpu
+    local sides = require("sides")
+    local file = io.open("Address.txt")
+    local T = file:read("*line")
+    local Address = {}
+    local n = 0
+    local event = require("event")
+    local shell = require("shell")
+    repeat
+        n = n+1
+        Address[n] = file:read("*line")
+    until n == 6
+    file:close("Address.txt")
+    gpu.setResolution(35,7)
+    os.sleep(1)
+    repeat
+        local count = 0
+        local Data = {}
+        for x,y in pairs(Address) do
+            count = count + 1
+            Sensor = component.proxy(component.get(y)).getSensorInformation()
+            if string.find(Sensor[2],"Needs") then
+                Data[count] = "Need Maintainance"
+            else
+                Data[count] = "      Good"
+            end
+        end
+        for a,b in pairs(Data) do
+            print("Turbine",a,b)
+        end
+    until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+    --gpu.setResolution(100,50)
+
+    local component = require("component")
+    local patterns = {"§r","§a","§e","§c","§"}
+    local gpu = component.gpu
+    local sides = require("sides")
+    local Turbine = component.list("gt_machine")
+    local file = io.open("Address.txt")
+    local num = 0
+    local T = file:read("*line")
+    local Address = {}
+    local n = 0
+    local shell = require("shell")
+    repeat
+        n = n+1
+        Address[n] = file:read("*line")
+    until n == 6
+    file:close("Address.txt")
+    gpu.setResolution(52,56)
+    os.sleep(1)
+    repeat
+        local Sensor = {}
+        for a,b in pairs(Address) do
+            Sensor[a] = component.proxy(component.get(b)).getSensorInformation()
+        end
+        local Stat = {}
+        local Stat1 = {}
+        local Stat2 = {}
+        local Stat3 = {}
+        local Stat4 = {}
+        local Stat5 = {}
+        local Stat6 = {}
+        local num1 = 0
+        for c,d in pairs(Address) do
+            num1 = num1 +1    --Number Turbine
+            for a,b in pairs(Sensor[num1]) do
+                if num1 == 1 then
+                    Stat1[a] = b
+                    for i,v in pairs(patterns) do
+                        Stat1[a] = string.gsub(Stat1[a], v, "")
+                    end
+                elseif num1 == 2 then
+                        Stat2[a] = b
+                    for i,v in pairs(patterns) do
+                        Stat2[a] = string.gsub(Stat2[a], v, "")
+                    end
+                elseif num1 == 3 then
+                        Stat3[a] = b
+                    for i,v in pairs(patterns) do
+                        Stat3[a] = string.gsub(Stat3[a], v, "")
+                    end
+                elseif num1 == 4 then
+                        Stat4[a] = b
+                    for i,v in pairs(patterns) do
+                        Stat4[a] = string.gsub(Stat4[a], v, "")
+                    end
+                elseif num1 == 5 then
+                        Stat5[a] = b
+                    for i,v in pairs(patterns) do
+                        Stat5[a] = string.gsub(Stat5[a], v, "")
+                    end
+                elseif num1 == 6 then
+                        Stat6[a] = b
+                    for i,v in pairs(patterns) do
+                        Stat6[a] = string.gsub(Stat6[a], v, "")
+                    end
+                end
+            end
+        end
+        local num2 = 0
+        num2 = num2 + 1
+        Stat[num2] = "---------------------------------------------------"
+        num2 = num2 + 1
+        Stat[num2] = "Turbine01"
+        for a,b in pairs(Stat1) do
+            num2 = num2 + 1
+            Stat[num2] = b
+        end
+    --    num2 = num2 + 1
+        Stat[num2] = "---------------------------------------------------"
+        num2 = num2 + 1
+        Stat[num2] = "Turbine02"
+        for a,b in pairs(Stat2) do
+            num2 = num2 + 1
+            Stat[num2] = b
+        end
+    --    num2 = num2 + 1
+        Stat[num2] = "---------------------------------------------------"
+        num2 = num2 + 1
+        Stat[num2] = "Turbine03"
+        for a,b in pairs(Stat3) do
+            num2 = num2 + 1
+            Stat[num2] = b
+        end
+    --    num2 = num2 + 1
+        Stat[num2] = "---------------------------------------------------"
+        num2 = num2 + 1
+        Stat[num2] = "Turbine04"
+        for a,b in pairs(Stat4) do
+            num2 = num2 + 1
+            Stat[num2] = b
+        end
+    --    num2 = num2 + 1
+        Stat[num2] = "---------------------------------------------------"
+        num2 = num2 + 1
+        Stat[num2] = "Turbine05"
+        for a,b in pairs(Stat5) do
+            num2 = num2 + 1
+            Stat[num2] = b
+        end
+    --    num2 = num2 + 1
+        Stat[num2] = "---------------------------------------------------"
+        num2 = num2 + 1
+        Stat[num2] = "Turbine06"
+        for a,b in pairs(Stat6) do
+            num2 = num2 + 1
+            Stat[num2] = b
+        end
+    --    num2 = num2 + 1
+        Stat[num2] = "---------------------------------------------------"
+        for a,b in pairs(Stat) do
+            print(b)
+        end
+    until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+    --gpu.setResolution(100,55)
+
+    local component = require("component")
+    local Address = {}
+    local patterns = {"§r","§a","§e","§c","§"}
+    local file = io.open("Address.txt","r")
+    local sides = require("sides")
+    local gpu = component.gpu
+    local shell = require("shell")
+    gpu.setResolution(52,12)
+    os.sleep(1)
+    local n = 0
+    file:read("l")
+    repeat
+        n = n+1
+        Address[n] = file:read("*line")
+    until n == 6
+    file:close("Address.txt")
+    repeat
+        local Data = {}
+        Data = component.proxy(component.get(Address[1])).getSensorInformation()
+        for x,y in pairs(Data) do
+            for i,v in pairs(patterns) do
+                Data[x] = string.gsub(Data[x],v,"")
+            end
+        end
+        print("-----------------------------------------------")
+        print("Turbine01")
+        for x,y in pairs(Data) do
+            print(y)
+        end
+        print("-----------------------------------------------")
+    until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+    --gpu.setResolution(100,50)
+
+    local component = require("component")
+    local Address = {}
+    local patterns = {"§r","§a","§e","§c","§"}
+    local file = io.open("Address.txt","r")
+    local sides = require("sides")
+    local gpu = component.gpu
+    local shell = require("shell")
+    gpu.setResolution(52,12)
+    os.sleep(1)
+    local n = 0
+    repeat
+        n = n+1
+        Address[n] = file:read("*line")
+    until n == 6
+    file:close("Address.txt")
+    repeat
+        local Data = {}
+        Data = component.proxy(component.get(Address[2])).getSensorInformation()
+        for x,y in pairs(Data) do
+            for i,v in pairs(patterns) do
+                Data[x] = string.gsub(Data[x],v,"")
+            end
+        end
+        print("-----------------------------------------------")
+        print("Turbine02")
+        for x,y in pairs(Data) do
+            print(y)
+        end
+        print("-----------------------------------------------")
+    until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+    --gpu.setResolution(100,50)
+
+    local component = require("component")
+    local Address = {}
+    local patterns = {"§r","§a","§e","§c","§"}
+    local file = io.open("Address.txt","r")
+    local sides = require("sides")
+    local gpu = component.gpu
+    local shell = require("shell")
+    gpu.setResolution(52,12)
+    os.sleep(1)
+    local n = 0
+    repeat
+        n = n+1
+        Address[n] = file:read("*line")
+    until n == 6
+    file:close("Address.txt")
+    repeat
+        local Data = {}
+        Data = component.proxy(component.get(Address[3])).getSensorInformation()
+        for x,y in pairs(Data) do
+            for i,v in pairs(patterns) do
+                Data[x] = string.gsub(Data[x],v,"")
+            end
+        end
+        print("-----------------------------------------------")
+        print("Turbine03")
+        for x,y in pairs(Data) do
+            print(y)
+        end
+        print("-----------------------------------------------")
+    until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+    --gpu.setResolution(100,50)
+
+    local component = require("component")
+    local Address = {}
+    local patterns = {"§r","§a","§e","§c","§"}
+    local file = io.open("Address.txt","r")
+    local sides = require("sides")
+    local gpu = component.gpu
+    local shell = require("shell")
+    gpu.setResolution(52,12)
+    os.sleep(1)
+    local n = 0
+    repeat
+        n = n+1
+        Address[n] = file:read("*line")
+    until n == 6
+    file:close("Address.txt")
+    repeat
+        local Data = {}
+        Data = component.proxy(component.get(Address[4])).getSensorInformation()
+        for x,y in pairs(Data) do
+            for i,v in pairs(patterns) do
+                Data[x] = string.gsub(Data[x],v,"")
+            end
+        end
+        print("-----------------------------------------------")
+        print("Turbine04")
+        for x,y in pairs(Data) do
+            print(y)
+        end
+        print("-----------------------------------------------")
+    until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+    --gpu.setResolution(100,50)
+
+    local component = require("component")
+    local Address = {}
+    local patterns = {"§r","§a","§e","§c","§"}
+    local file = io.open("Address.txt","r")
+    local sides = require("sides")
+    local gpu = component.gpu
+    local shell = require("shell")
+    gpu.setResolution(52,12)
+    os.sleep(1)
+    local n = 0
+    repeat
+        n = n+1
+        Address[n] = file:read("*line")
+    until n == 6
+    file:close("Address.txt")
+    repeat
+        local Data = {}
+        Data = component.proxy(component.get(Address[5])).getSensorInformation()
+        for x,y in pairs(Data) do
+            for i,v in pairs(patterns) do
+                Data[x] = string.gsub(Data[x],v,"")
+            end
+        end
+        print("-----------------------------------------------")
+        print("Turbine05")
+        for x,y in pairs(Data) do
+            print(y)
+        end
+        print("-----------------------------------------------")
+    until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+    --gpu.setResolution(100,50)
+
+    local component = require("component")
+    local Address = {}
+    local patterns = {"§r","§a","§e","§c","§"}
+    local file = io.open("Address.txt","r")
+    local sides = require("sides")
+    local gpu = component.gpu
+    local shell = require("shell")
+    gpu.setResolution(52,12)
+    os.sleep(1)
+    local n = 0
+    repeat
+        n = n+1
+        Address[n] = file:read("*line")
+    until n == 6
+    file:close("Address.txt")
+    repeat
+        local Data = {}
+        Data = component.proxy(component.get(Address[6])).getSensorInformation()
+        for x,y in pairs(Data) do
+            for i,v in pairs(patterns) do
+                Data[x] = string.gsub(Data[x],v,"")
+            end
+        end
+        print("-----------------------------------------------")
+        print("Turbine06")
+        for x,y in pairs(Data) do
+            print(y)
+        end
+        print("-----------------------------------------------")
+    until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+    --gpu.setResolution(100,50)
+
+    local component = require("component")
+    local gt = component.gt_machine
+    local patterns = {"§r","§a","§e","§c","§"}
+    local Tank = component.proxy(component.get("e9f41d11-4c40-4da4-b5a1-4f6215f383c0"))
+    local Battery = component.proxy(component.get("d7517953-19de-403b-bdcf-1ae530aba5c6"))
+    local file = io.open("Address.txt")
+    local T = file:read("*line")
+    local Address = {}
+    local n = 0
+    local gpu = component.gpu
+    local sides = require("sides")
+    local shell = require("shell")
+    gpu.setResolution(48,13)
+    os.sleep(1)
+    repeat
+        n = n+1
+        Address[n] = file:read("*line")
+    until n == 6
+    file:close("Address.txt") 
+    repeat
+        local DataTank = {}
+        local DataBattery = {}
+        local Data = {}
+        local Data1 = {}
+        local Sensor = {}
+        for x,y in pairs(Tank.getSensorInformation()) do
+            DataTank[x] = y
+            for i,v in pairs(patterns) do
+                DataTank[x] = string.gsub(DataTank[x],v,"")
+            end
+        end
+        local num = 1
+        for x,y in pairs(Address) do
+            Sensor[x] = component.proxy(component.get(y)).getSensorInformation()
+            for a,b in pairs(Sensor[x]) do
+                Data[num] = b
+                num = num+1
+            end
+        end
+        local num1 = 4
+        local num2 = 1
+        repeat
+            Data1[num2] = Data[num1]
+            num1 = num1+8
+            num2 = num2+1
+        until num1 == 52
+        local num3 = 1
+        repeat
+            for c,d in pairs(patterns) do
+                Data1[num3] = string.gsub(Data1[num3],d,"")
+            end
+            Data1[num3] = string.gsub(Data1[num3],"Stored Energy: ","")
+            Data1[num3] = string.gsub(Data1[num3],"EU / 4,194,816 EU","")
+            Data1[num3] = string.gsub(Data1[num3],",","")
+            Data1[num3] = string.gsub(Data1[num3]," ","")
+            num3 = num3 + 1
+        until num3 == 7
+        local energy = 0
+        for x,y in pairs(Data1) do
+            energy = energy + y
+        end
+        ---------------------------------------------------------------------
+        DataTank[4] = string.gsub(DataTank[4],"128,000,000 L","")
+        local DataTankNUM = string.gsub(DataTank[4],"L","")
+        DataTankNUM = string.gsub(DataTankNUM,",","")
+        local TA = DataTankNUM
+        for x,y in pairs(Tank.getSensorInformation()) do
+            DataTank[x] = y
+            for i,v in pairs(patterns) do
+                DataTank[x] = string.gsub(DataTank[x],v,"")
+            end
+        end
+        DataTank[4] = string.gsub(DataTank[4],"128,000,000 L","")
+        local DataTankNUM1 = string.gsub(DataTank[4],"L","")
+        DataTankNUM1 = string.gsub(DataTankNUM1,",","")
+        local TB = DataTankNUM1
+        local avg = (TB - TA)/1
+        ---------------------------------------------------------------------
+        for x,y in pairs(Battery.getSensorInformation()) do
+            DataBattery[x] = y
+            for i,v in pairs(patterns) do
+                DataBattery[x] = string.gsub(DataBattery[x],v,"")
+            end
+        end
+        print("------------------------------------------------")
+        print("Energy Storage")
+        for x,y in pairs(DataBattery) do
+            print(y)
+        end
+        print("Energy Stored:",energy,"EU")
+        print("------------------------------------------------")
+        print("Nitrobenzene")
+        print("Fluid Stored",DataTank[4],"/ 128,000,000 L")
+        print("Flow Rate",avg,"L/s")
+        print("------------------------------------------------")
+    until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+    --gpu.setResolution(100,50)
+end

@@ -1,0 +1,16 @@
+local component = require("component")
+local gt = component.gt_machine
+--local test = component.proxy(component.get("4b667015-b7f9-4b67-8494-131380fedd29"))
+num = 0
+T = {}
+for a,b in component.list("gt_machine") do
+    num = num + 1
+    T[num] = a
+end
+for a,b in pairs(gt) do
+    print(a,b)
+end
+--for a,b in pairs(test.getEUCapacity()) do
+--    print(a,b)
+--end
+--print(test.getStoredEU())

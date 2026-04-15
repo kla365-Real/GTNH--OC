@@ -1,0 +1,33 @@
+local component = require("component")
+local Address = {}
+local patterns = {"§r","§a","§e","§c","§"}
+local file = io.open("Address.txt","r")
+local sides = require("sides")
+local gpu = component.gpu
+local shell = require("shell")
+os.sleep(1)
+gpu.setResolution(52,12)
+file:read("l")
+file:read("l")
+file:read("l")
+file:read("l")
+file:read("l")
+file:read("l")
+Address = file:read("l")
+repeat
+    local Data = {}
+    Data = component.proxy(component.get(Address)).getSensorInformation()
+    for x,y in pairs(Data) do
+        for i,v in pairs(patterns) do
+            Data[x] = string.gsub(Data[x],v,"")
+        end
+    end
+    print("-----------------------------------------------")
+    print("Turbine06")
+    for x,y in pairs(Data) do
+        print(y)
+    end
+    print("-----------------------------------------------")
+until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+shell.execute("TurbineStorage")
+gpu.setResolution(100,50)

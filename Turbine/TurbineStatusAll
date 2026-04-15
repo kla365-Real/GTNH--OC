@@ -1,0 +1,124 @@
+local component = require("component")
+local patterns = {"§r","§a","§e","§c","§"}
+local gpu = component.gpu
+local sides = require("sides")
+local Turbine = component.list("gt_machine")
+local file = io.open("Address.txt")
+local num = 0
+local T = file:read("*line")
+local Address = {}
+local n = 0
+local shell = require("shell")
+repeat
+    n = n+1
+    Address[n] = file:read("*line")
+until n == 6
+file:close("Address.txt")
+os.sleep(2)
+gpu.setResolution(52,56)
+repeat
+    local Sensor = {}
+    for a,b in pairs(Address) do
+        Sensor[a] = component.proxy(component.get(b)).getSensorInformation()
+    end
+    local Stat = {}
+    local Stat1 = {}
+    local Stat2 = {}
+    local Stat3 = {}
+    local Stat4 = {}
+    local Stat5 = {}
+    local Stat6 = {}
+    local num1 = 0
+    for c,d in pairs(Address) do
+        num1 = num1 +1    --Number Turbine
+        for a,b in pairs(Sensor[num1]) do
+            if num1 == 1 then
+                Stat1[a] = b
+                for i,v in pairs(patterns) do
+                    Stat1[a] = string.gsub(Stat1[a], v, "")
+                end
+            elseif num1 == 2 then
+                    Stat2[a] = b
+                for i,v in pairs(patterns) do
+                    Stat2[a] = string.gsub(Stat2[a], v, "")
+                end
+            elseif num1 == 3 then
+                    Stat3[a] = b
+                for i,v in pairs(patterns) do
+                    Stat3[a] = string.gsub(Stat3[a], v, "")
+                end
+            elseif num1 == 4 then
+                    Stat4[a] = b
+                for i,v in pairs(patterns) do
+                    Stat4[a] = string.gsub(Stat4[a], v, "")
+                end
+            elseif num1 == 5 then
+                    Stat5[a] = b
+                for i,v in pairs(patterns) do
+                    Stat5[a] = string.gsub(Stat5[a], v, "")
+                end
+            elseif num1 == 6 then
+                    Stat6[a] = b
+                for i,v in pairs(patterns) do
+                    Stat6[a] = string.gsub(Stat6[a], v, "")
+                end
+            end
+        end
+    end
+    local num2 = 0
+    num2 = num2 + 1
+    Stat[num2] = "---------------------------------------------------"
+    num2 = num2 + 1
+    Stat[num2] = "Turbine01"
+    for a,b in pairs(Stat1) do
+        num2 = num2 + 1
+        Stat[num2] = b
+    end
+--    num2 = num2 + 1
+    Stat[num2] = "---------------------------------------------------"
+    num2 = num2 + 1
+    Stat[num2] = "Turbine02"
+    for a,b in pairs(Stat2) do
+        num2 = num2 + 1
+        Stat[num2] = b
+    end
+--    num2 = num2 + 1
+    Stat[num2] = "---------------------------------------------------"
+    num2 = num2 + 1
+    Stat[num2] = "Turbine03"
+    for a,b in pairs(Stat3) do
+        num2 = num2 + 1
+        Stat[num2] = b
+    end
+--    num2 = num2 + 1
+    Stat[num2] = "---------------------------------------------------"
+    num2 = num2 + 1
+    Stat[num2] = "Turbine04"
+    for a,b in pairs(Stat4) do
+        num2 = num2 + 1
+        Stat[num2] = b
+    end
+--    num2 = num2 + 1
+    Stat[num2] = "---------------------------------------------------"
+    num2 = num2 + 1
+    Stat[num2] = "Turbine05"
+    for a,b in pairs(Stat5) do
+        num2 = num2 + 1
+        Stat[num2] = b
+    end
+--    num2 = num2 + 1
+    Stat[num2] = "---------------------------------------------------"
+    num2 = num2 + 1
+    Stat[num2] = "Turbine06"
+    for a,b in pairs(Stat6) do
+        num2 = num2 + 1
+        Stat[num2] = b
+    end
+--    num2 = num2 + 1
+    Stat[num2] = "---------------------------------------------------"
+    for a,b in pairs(Stat) do
+        print(b)
+    end
+until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+shell.execute("Turbine01")
+gpu.setResolution(100,55)

@@ -1,0 +1,6 @@
+local component = require("component")
+local file = io.open("Address.txt","w")
+file:write("Turbine Address")
+for x in component.list("gt_machine") do
+    file:write("\n",x)
+end

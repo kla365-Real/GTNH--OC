@@ -1,0 +1,33 @@
+local component = require("component")
+local gpu = component.gpu
+local sides = require("sides")
+local file = io.open("Address.txt")
+local T = file:read("*line")
+local Address = {}
+local n = 0
+local shell = require("shell")
+repeat
+    n = n+1
+    Address[n] = file:read("*line")
+until n == 6
+file:close("Address.txt")
+os.sleep(2)
+gpu.setResolution(23,7)
+repeat
+    local count = 0
+    local Data = {}
+    for x,y in pairs(Address) do
+        count = count + 1
+        Sensor = component.proxy(component.get(y)).getSensorInformation()
+        if string.find(Sensor[1],"running") then
+            Data[count] = "Online"
+        else
+            Data[count] = "offline"
+        end
+    end
+    for a,b in pairs(Data) do
+        print("Turbine",a,b)
+    end
+until component.proxy(component.get("2eb4f337-c2a5-47de-9307-fd01481bc08e")).getInput(sides.top) == 15
+shell.execute("TurbineStatusMaintain")
+gpu.setResolution(100,50)
