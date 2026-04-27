@@ -1,0 +1,18 @@
+1)Growth
+2)tier
+3)name mod
+4)air quarity
+5)roots
+6)fert
+7)size
+8)resitance
+9)weedex
+10)nutirent
+11)harvest level
+12)humidity
+13)gain
+14)hardness
+15)crop name
+16)metadata
+17)maxsize
+18) color

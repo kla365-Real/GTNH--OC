@@ -1,0 +1,39 @@
+local Robot_Func = require("Robot_Func")
+local rb = require("robot")
+local component = require("component")
+local geo = component.geolyzer
+local Farm_Func = require("Farm_Func")
+local sides = require("sides")
+local Storage_Func = require("Storage_Func")
+local rs = component.redstone
+local sides = require("sides")
+local Crossbreed = require("Crossbreed")
+local navi = component.navigation
+local inv = component.inventory_controller
+local lvlCrop_Func = require("lvlCrop_Func")
+slot = 0
+--for x,t in pairs(Farm_Func.Analyze()) do
+--    print(x,t)
+--end
+--for x,y in pairs(require("component").geolyzer.analyze((require("sides")).down)) do print(x,y) end
+--local Data = Farm_Func.Analyze()
+--for x,y in pairs(Data) do print(x,y) end
+--for x,y in pairs(Storage_Func.StorageSize()) do
+--    print(x,y)
+--end
+--Storage_Func.MoveCroptoDislocation()
+--print((geo.analyze(sides.down))["crop:name"])
+--Crossbreed.PlotCrossbreed()
+--rb.turnRight()
+--print(Robot_Func.getDirection())
+--Robot_Func.turntoDirection("south")
+--rb.useDown()
+--Crossbreed.PlotCrossbreed()
+local PosStat = {}
+--PosStat = lvlCrop_Func.CheckPlot()
+--print(PosStat[1],PosStat[3])
+--Storage_Func.MoveStoragetoCrop(1,PosStat[1][1],PosStat[1][2])
+--Storage_Func.MoveStoragetoCrop(2,PosStat[3][1],PosStat[3][2])
+--print(PosStat[1][1],PosStat[1][2])
+--Storage_Func.MoveStoragetoCrop(2,2,27)
+Storage_Func.MoveCroptoStorage(1)

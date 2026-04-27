@@ -1,0 +1,16 @@
+local lvlCrop_Func = require("lvlCrop_Func")
+local Robot_Func = require("Robot_Func")
+local Station_Func = require("Station_Func")
+local Configs = require("Configs")
+while true do
+    local num = 0
+    repeat
+        Robot_Func.Moveto(Configs.FarmPos1[1],Configs.FarmPos1[3])
+        num = num + 1
+        local PosStat = {}
+        PosStat = lvlCrop_Func.CheckPlot()
+        lvlCrop_Func.Change(lvlCrop_Func.Compare(PosStat),PosStat)
+    until num == 5
+    Station_Func.MovetoCharger()
+    Robot_Func.Moveto(Configs.FarmPos1[1],Configs.FarmPos1[3])
+end
