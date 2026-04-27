@@ -17,7 +17,7 @@ function lvlCrop_Func.Position()
 end
 function lvlCrop_Func.CheckType()
     local Data = geo.analyze(sides.bottom)
-    if Data["crop:name"] ~= configs.Croplvl then
+    if Data["crop:name"] ~= configs.Croplvl and Data["crop:growth"] ~= nil then
         Crossbreed.Replace()
     end    
 end
@@ -26,9 +26,9 @@ function lvlCrop_Func.Check()
     local Pos = Robot_Func.GetPosition()
     local ResultPos = {Pos[1],Pos[3]}
     local PosStat = {}
+    lvlCrop_Func.CheckType()
     if Data["crop:growth"] ~= nil  and Data["crop:gain"] ~= nil then
     local Stat = Data["crop:growth"] + Data["crop:gain"]
-        lvlCrop_Func.CheckType()
         PosStat = {ResultPos,Stat}     -- return Pos , stat
     end
     return(PosStat)
@@ -49,7 +49,7 @@ function lvlCrop_Func.Compare(table)
    return(CompareData)
 end
 function lvlCrop_Func.Change(CompareData,Pos)
-    --if CompareData[1][2] ~= nil and CompareData[2][2] ~= nil and CompareData[3][2] ~= nil and CompareData[4][2] ~= nil then
+    if CompareData[1] ~= nil and CompareData[2] ~= nil then
         local Result1 = CompareData[1][1][1] + CompareData[1][1][2]
         local Result2 = CompareData[2][1][1] + CompareData[2][1][2]
         if Result1 == Result2 or Result1 + 2 == Result2 or Result2 + 2 == Result1 then
@@ -73,7 +73,7 @@ function lvlCrop_Func.Change(CompareData,Pos)
             Robot_Func.Moveto(Pos[2][1][1],Pos[2][1][2])
             Farm_Func.UseCropstick(2)
         end
-    --end
+    end
 end
 function lvlCrop_Func.CheckPlot()
     local num = 0
