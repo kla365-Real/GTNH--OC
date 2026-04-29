@@ -55,6 +55,7 @@ function Storage_Func.MoveCroptoStorage(Slot)
     slot = slot + 1
     local Data = Robot_Func.GetPosition()
     direction = Robot_Func.getDirection()
+    Robot_Func.turntoDirection("east")
     Storage_Func.MovetoDislocation()
     Storage_Func.UseBinder()
     Robot_Func.Moveto(Data[1],Data[3])

@@ -2,15 +2,29 @@ local lvlCrop_Func = require("lvlCrop_Func")
 local Robot_Func = require("Robot_Func")
 local Station_Func = require("Station_Func")
 local Configs = require("Configs")
-while true do
+repeat
     local num = 0
     repeat
         Robot_Func.Moveto(Configs.FarmPos1[1],Configs.FarmPos1[3])
         num = num + 1
         local PosStat = {}
         PosStat = lvlCrop_Func.CheckPlot()
+        for x,y in pairs(lvlCrop_Func.Compare(PosStat)) do
+            print("lvl",y[2])
+        end
+        if PosStat[1][2] ~= nil and PosStat[2][2] ~= nil and PosStat[3][2] ~= nil and PosStat[4][2] ~= nil then
+            local stat = lvlCrop_Func.Compare(PosStat)
+            if stat[1][2] ~= nil and stat[2][2] ~= nil then
+                if stat[1][2] == 52 and stat[2][2] == 52 then
+                    stop = true
+                end
+            end
+        end
+        print("-----------------------------------------------")
         lvlCrop_Func.Change(lvlCrop_Func.Compare(PosStat),PosStat)
     until num == 5
     Station_Func.MovetoCharger()
+    Station_Func.FillCropstick()
+    Station_Func.StoreItem()
     Robot_Func.Moveto(Configs.FarmPos1[1],Configs.FarmPos1[3])
-end
+until(stop == true)

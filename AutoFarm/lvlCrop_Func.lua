@@ -19,17 +19,25 @@ function lvlCrop_Func.CheckType()
     local Data = geo.analyze(sides.bottom)
     if Data["crop:name"] ~= configs.Croplvl and Data["crop:growth"] ~= nil then
         Crossbreed.Replace()
+    elseif Data["crop:name"] == configs.Croplvl and Data["crop:growth"] >= 22 then
+        Crossbreed.Replace()
+    elseif Data["crop:name"] == configs.Croplvl and Data["crop:gain"] >= 32 then
+        Crossbreed.Replace()
     end    
+    if Data["crop:growth"] == nil then
+        Farm_Func.UseCropstick(1)
+    end
 end
 function lvlCrop_Func.Check()
+    lvlCrop_Func.CheckType()
     local Data = geo.analyze(sides.bottom)
     local Pos = Robot_Func.GetPosition()
     local ResultPos = {Pos[1],Pos[3]}
     local PosStat = {}
-    lvlCrop_Func.CheckType()
-    if Data["crop:growth"] ~= nil  and Data["crop:gain"] ~= nil then
-    local Stat = Data["crop:growth"] + Data["crop:gain"]
-        PosStat = {ResultPos,Stat}     -- return Pos , stat
+    if Data["crop:growth"] ~= nil  and Data["crop:gain"] ~= nil and Data["crop:name"] == configs.Croplvl then
+        PosStat = {ResultPos,Data["crop:growth"],Data["crop:gain"]}     -- return Pos , stat
+    else
+        PosStat = {ResultPos}
     end
     return(PosStat)
 end
@@ -40,9 +48,11 @@ function lvlCrop_Func.Compare(table)
     while Num ~= 100 do
         Num = Num + 1
         for x,y in pairs(table) do      -- pos,stat
-            if Num == y[2] and y[2] ~= nil then
-                N = N - 1
-                CompareData[N] = {y[1],y[2]}
+            if y[2] ~= nil and y[3] ~= nil then
+                if Num == y[2] + y[3] and y[2] <= 21 and y[3] <= 31 then
+                    N = N - 1
+                    CompareData[N] = {y[1],y[2] + y[3]}
+                end
             end
         end
     end
@@ -76,7 +86,6 @@ function lvlCrop_Func.Change(CompareData,Pos)
     end
 end
 function lvlCrop_Func.CheckPlot()
-    local num = 0
     local PosStat = {}
     Farm_Func.DestroyWeed()
     PosStat[1] = lvlCrop_Func.Check()

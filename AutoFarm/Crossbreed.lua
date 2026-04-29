@@ -32,7 +32,6 @@ function Crossbreed.Crossbreed()
         return(Farm_Func.UseCropstick(2))
     else
         direction = Robot_Func.getDirection()
-        Robot_Func.turntoDirection("east")
         Storage_Func.MoveCroptoStorage(slot)
         return(Farm_Func.UseCropstick(2))
     end

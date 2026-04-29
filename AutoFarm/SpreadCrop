@@ -1,0 +1,16 @@
+local Spread_Func = require("Spread_Func")
+local Station_Func = require("Station_Func")
+local Configs = require("Configs")
+local Robot_Func = require("Robot_Func")
+slot = 0
+repeat
+    local num = 0
+    Robot_Func.Moveto(Configs.FarmPos1[1],Configs.FarmPos1[3])
+    repeat
+        num = num + 1
+        Spread_Func.Spread(true)
+    until(num == 6)
+    Station_Func.MovetoCharger()
+    Station_Func.FillCropstick()
+    Station_Func.StoreItem()
+until(slot == 120)
